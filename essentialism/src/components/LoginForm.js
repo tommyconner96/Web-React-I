@@ -11,6 +11,10 @@ width: 300px;
 margin: 0 auto;
 margin-top: 2em;
 color: #eae7dc;
+@media (max-width: 500px) {
+  width:85%;
+  margin: 0 auto;
+}
 `
 
 const BtnStyle = styled.button`
