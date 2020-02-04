@@ -1,6 +1,10 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
+import React, { useState } from 'react'
+// import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
+import { axiosWithAuth } from './axiosWithAuth'
+
+
+// https://essentialism-node-express-serv.herokuapp.com/auth/login
 
 const LoginStyle = styled.div`
 // border: 2px dashed #e98074;
@@ -31,25 +35,59 @@ border-radius: 1em;
   }
 `
 
-function LoginForm() {
-  const { register, handleSubmit } = useForm()
-  const onSubmit = (data, e) => {
-    console.log(data)
-    e.target.reset();
+function LoginForm(props) {
+  // const { register, handleSubmit } = useForm()
+  const [user, setUser] = useState()
+  const handleChange = event => {
+    setUser(
+      {
+        ...user,
+        [event.target.name]: event.target.value
+      }
+    )
   }
+  // const onSubmit = (data, e) => {
+  //   console.log(data)
+  //   e.target.reset();
+
+
+const login = event => {
+  event.preventDefault()
+  axiosWithAuth()
+  .post ('https://deploy-serv-node-essentialism.herokuapp.com/auth/login',user, {withCredentials: true})
+  .then(result => {
+    console.log(result.data)
+    localStorage.setItem('token', result.data.token)
+    props.history.push('/')
+})
+
+  .catch(error => {
+    if(error.response) {
+      console.log(error.response.data)
+      console.log(error.response.status)
+      console.log(error.response.headers)
+
+    } else {
+      console.log(error.message)
+    }
+  })
+}
+
+  
    
   return (
     // <div className='login-form'>
     <LoginStyle>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={login}>
         <label>
           Username:
           <br />
           <input 
-            name="userName" 
-            ref={register({ required: true, })} 
+            name="username" 
+            // ref={register({ required: true, })} 
             placeholder='Username' 
             type='text'
+            onChange={handleChange}
             />
         </label>
         <br />
@@ -57,17 +95,20 @@ function LoginForm() {
           Password:
           <br />
           <input 
-            name="passWord" 
-            ref={register({ required: true, })} 
+            name="password" 
+            // ref={register({ required: true, })} 
             placeholder='Password' 
-            type='password'/>
+            type='password'
+            onChange={handleChange}
+            />
             <br />
             <BtnStyle type="submit">Login</BtnStyle>
         </label>
+      
       </form>
     </LoginStyle>
 
   );
-}
+  }
 
 export default LoginForm;
