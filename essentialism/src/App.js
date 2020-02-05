@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Route } from 'react-router-dom'
 import { LoginForm, RegisterForm, Navigation } from './components'
 
-//styles
+//styles 
 
 const AppContainer=styled.div`
 background-color: #eae7dc;
