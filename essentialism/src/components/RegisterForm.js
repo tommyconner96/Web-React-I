@@ -55,14 +55,14 @@ function RegisterForm(props) {
 
 const login = event => {
   event.preventDefault()
-  // event.target.reset();
+  event.target.reset();
   axiosWithAuth()
   .post ('https://deploy-serv-node-essentialism.herokuapp.com/auth/register',user, {withCredentials: true})
   .then(result => {
     console.log(result.data)
 
     localStorage.setItem('token', result.data.token)
-    props.history.push('/')
+    props.history.push('/success')
 }
 )
 

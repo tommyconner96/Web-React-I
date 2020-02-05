@@ -56,14 +56,14 @@ function LoginForm(props) {
 const login = event => {
   event.preventDefault()
   console.log('user', user)
-  // event.target.reset();
+  event.target.reset();
   axiosWithAuth()
   .post ('https://deploy-serv-node-essentialism.herokuapp.com/auth/login',user, {withCredentials: true})
   .then(result => {
     console.log(result.data)
 
     localStorage.setItem('token', result.data.token)
-    props.history.push('/')
+    props.history.push('/dashboard')
 }
 )
 
