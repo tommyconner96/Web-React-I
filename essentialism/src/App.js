@@ -1,7 +1,11 @@
 import React from 'react';
 import './App.css';
-import LoginForm from './components/LoginForm'
+// import LoginForm from './components/LoginForm'
 import styled from 'styled-components'
+import { Route } from 'react-router-dom'
+import { LoginForm, RegisterForm, Navigation } from './components'
+
+//styles
 
 const AppContainer=styled.div`
 background-color: #eae7dc;
@@ -50,14 +54,21 @@ border-radius: 2em;
 }
 
 `
-
+//app
 function App() {
 return( 
 <AppContainer>
+<Navigation />
     <HeaderStyle>
       <h1>
         Essentialism App
         </h1>
+        <div>
+          {/* <Route exact path="/" component={Home} /> */}
+
+
+
+        </div>
       <Para>
       Enter Essentialism. The Way of the Essentialist involves doing less, 
       but better, so you can make the highest possible contribution. 
@@ -66,7 +77,10 @@ return(
       </Para>
     </HeaderStyle>      
   <div>
-    <LoginForm />
+  {/* <Route  path="/login" component={LoginForm} /> */}
+  <Route  path="/register" component={RegisterForm} />
+  <Route  exact path="/" component={LoginForm} />
+    {/* <LoginForm /> */}
   </div>
 </AppContainer>
 )   

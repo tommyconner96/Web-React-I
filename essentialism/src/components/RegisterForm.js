@@ -5,7 +5,7 @@ import { axiosWithAuth } from './axiosWithAuth'
 
 
 // https://essentialism-node-express-serv.herokuapp.com/auth/login
-// https://deploy-serv-node-essentialism.herokuapp.com/auth/login
+
 
 const LoginStyle = styled.div`
 // border: 2px dashed #e98074;
@@ -36,9 +36,9 @@ border-radius: 1em;
   }
 `
 
-function LoginForm(props) {
+function RegisterForm(props) {
   // const { register, handleSubmit } = useForm()
-  const [user, setUser] = useState()
+  const [user, setUser] = useState({username: '', password: ''})
   const handleChange = event => {
     setUser(
       {
@@ -55,10 +55,9 @@ function LoginForm(props) {
 
 const login = event => {
   event.preventDefault()
-  console.log('user', user)
   // event.target.reset();
   axiosWithAuth()
-  .post ('https://deploy-serv-node-essentialism.herokuapp.com/auth/login',user, {withCredentials: true})
+  .post ('https://deploy-serv-node-essentialism.herokuapp.com/auth/register',user, {withCredentials: true})
   .then(result => {
     console.log(result.data)
 
@@ -83,17 +82,19 @@ const login = event => {
    
   return (
     // <div className='login-form'>
-    <LoginStyle>
+    <LoginStyle login={login}>
       <form onSubmit={login}>
         <label>
-          Username:
+          Email:
           <br />
           <input 
             name="username" 
             // ref={register({ required: true, })} 
-            placeholder='Username' 
-            type='text'
+            placeholder='Email' 
+            type='email'
+            value={user.username}
             onChange={handleChange}
+
             />
         </label>
         <br />
@@ -105,10 +106,11 @@ const login = event => {
             // ref={register({ required: true, })} 
             placeholder='Password' 
             type='password'
+            value={user.password}
             onChange={handleChange}
             />
             <br />
-            <BtnStyle type="submit">Login</BtnStyle>
+            <BtnStyle type="submit">Register</BtnStyle>
         </label>
       
       </form>
@@ -117,4 +119,4 @@ const login = event => {
   );
   }
 
-export default LoginForm;
+export default RegisterForm;
